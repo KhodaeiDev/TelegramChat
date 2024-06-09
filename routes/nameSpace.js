@@ -1,8 +1,9 @@
 const express = require("express");
-const nameSpaceController = require("../controllers/nameSpace");
+const namespaceController = require("../controllers/nameSpace");
 const router = express.Router();
 
-router.get("/", nameSpaceController.getAll);
-router.post("/", nameSpaceController.create);
+router.get("/", namespaceController.getAll);
+router.post("/", namespaceController.create);
+router.post("/room", namespaceController.createRoom);
 
 module.exports = router;

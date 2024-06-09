@@ -42,10 +42,12 @@ const namespaceSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  room: {
+  rooms: {
     type: [roomSchema],
     default: [],
   },
 });
 
 const model = mongoose.model("Namespace", namespaceSchema);
+
+module.exports = model;
