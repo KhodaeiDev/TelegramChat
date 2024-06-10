@@ -32,6 +32,7 @@ exports.create = async (req, res, next) => {
 exports.createRoom = async (req, res, next) => {
   try {
     const { title, namespace } = req.body;
+    let image = null;
 
     const namespase = await namespaceModel.findOne({
       href: namespace,
@@ -49,7 +50,11 @@ exports.createRoom = async (req, res, next) => {
       });
     }
 
-    const room = { title, image: "Test image" };
+    if (req.file) {
+      image = `/room/${req.file.filename}`;
+    }
+
+    const room = { title, image: image ? image : undefined };
 
     await namespaceModel.findOneAndUpdate(
       { href: namespace },
