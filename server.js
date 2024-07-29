@@ -1,12 +1,18 @@
 const mongoose = require("mongoose");
 const app = require("./app");
 const dotenv = require("dotenv");
+const http = require("http");
+const { socketConnection } = require("./utils/socketConnection");
+const { initConnections } = require("./socket.io/namespaces.socket");
 dotenv.config();
 
 //* Server Running
 const startServer = () => {
   const PORT = process.env.PORT || 4003;
-  app.listen(PORT, () => {
+  const httpServer = http.createServer(app);
+  const io = socketConnection(httpServer);
+  initConnections(io);
+  httpServer.listen(PORT, () => {
     console.log(`Server Running on Port ${PORT}`);
   });
 };
