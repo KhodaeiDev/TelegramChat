@@ -3,7 +3,7 @@ const app = require("./app");
 const dotenv = require("dotenv");
 const http = require("http");
 const { socketConnection } = require("./utils/socketConnection");
-const { initConnections } = require("./socket.io/namespaces.socket");
+const socketHandller = require("./socket.io/index");
 dotenv.config();
 
 //* Server Running
@@ -11,7 +11,7 @@ const startServer = () => {
   const PORT = process.env.PORT || 4003;
   const httpServer = http.createServer(app);
   const io = socketConnection(httpServer);
-  initConnections(io);
+  socketHandller(io);
   httpServer.listen(PORT, () => {
     console.log(`Server Running on Port ${PORT}`);
   });

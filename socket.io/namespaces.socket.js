@@ -6,3 +6,12 @@ exports.initConnections = async (io) => {
     socket.emit("namespaces", namespaces);
   });
 };
+
+exports.getNamespacesRooms = async (io) => {
+  const namespaces = await namespaceModel.find({}).lean();
+  namespaces.forEach((namespace) => {
+    io.of(namespace.href).on("connection", (socket) => {
+      socket.emit("namespaceRooms", namespace.rooms);
+    });
+  });
+};
